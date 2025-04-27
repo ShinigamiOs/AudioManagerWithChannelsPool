@@ -82,4 +82,4 @@ audioManager.Stop("Explosion");
 
 ## 🪦 Licencia
 
-Este proyecto es de código abierto bajo la licencia MIT.
+Este proyecto es de código abierto bajo la licencia GNU.
