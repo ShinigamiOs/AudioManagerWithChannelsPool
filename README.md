@@ -8,47 +8,54 @@ Realizado en Unity 6.0, verificacion de compatibilidad con otras versiones pendi
 
 ## 🚀 Características principales
 
-- 🎛️ Reproducción de sonidos por nombre o ID
-- 🔁 Reproducción con superposición (`PlayOverlapping`) o única (`Play`)
-- 🧠 Pool de canales con control de límite dinámico
-- 🔥 Precarga inicial de canales configurables
-- 🚫 Soporte para modo estricto (no se crean canales si se supera el límite)
-- 📡 Eventos de inicio, fin y parada de audio
-- ✅ Plug & Play: solo necesitas un `GameObject` con dos componentes
+- Reproducción de sonidos por nombre o ID
+- Reproducción con superposición (`PlayOverlapping`) o única (`Play`)
+-  Pool de canales 
+-  Plug & Play: solo necesitas un `GameObject` con dos componentes
 
 ---
 
 ## 🛠️ Instalación
 
 1. Clona o descarga este repositorio en tu proyecto de Unity.
-2. Crea un nuevo `GameObject` en la escena. Nómbralo por ejemplo: `AudioManager`.
+
 
 ---
 
 ## 🧩 Configuración rápida
-
-1. Agrega los siguientes **componentes** al GameObject:
+1. Crea un nuevo `GameObject` en la escena. Nómbralo por ejemplo: `SFXManager`.
+2. Agrega los siguientes **componentes** al GameObject:
    - `AudioLibrary` → contiene la lista de audios y sus configuraciones.
    - `AudioManager` → gestiona la reproducción usando un sistema de canales.
 
-2. En el componente `AudioLibrary`:
+3. En el componente `AudioLibrary`:
    - Agrega tantos `AudioEntry` como necesites.
    - Asigna:
      - `Nombre`
      - `AudioClip`
-     - Volumen, pitch, loop, etc.
+     -  pitch, loop, etc.
   
 
-3. En el componente `AudioManager`:
-   - Ajusta la configuración de canales:
-     - `MaxChannels`: límite total de canales simultáneos.
-     - `PrewarmChannels`: cuántos canales se crean desde el inicio.
-     - `StrictLimit`: si está activo, no se permiten canales adicionales al límite.
-     - 
+4. En el componente `AudioManager`:
+   - Ajusta la configuración:
+     - `ManagerName`: Nombre independiente del manager (si hay varios managers nombra cada uno diferente)
+     Configuracion de canal:
+     - `ChannelCount`: numero de canales de la pool.
+     - `MasterVolume`: volumen de los clips de audio.
+     - `StopOnMute`: Cuando se silencian los audios deberian detenrse o pausarse? (los SFX se deberian detener, la musica pausar)
+     Configuracion de UI (no es necesario pero recomendable si tienes un menu de opciones):
+     - `SlideUI`: Slider que controla el volumen de este manager.
+     - `SliderImageFill`: La imagen de relleno del SLider.
+     - `SliderHanddlerImage`: La imagen del handdler del slider.
+     - `ToggleUI`: El Toggle de la ui que representa el Mute.
+     - `SliderMutedColor`: El color del que sera el slider si esta Muted.
 Recomendaciones:
 
-- Divide los audios por area y usa un manager para cada area, para que sea mas simple utilizarlos.
-- SFX: pitch=1±0.1, Volumen:1
+- Divide los audios por area y usa un manager para cada area, para que sea mas simple utilizarlos, ejemplo:
+- SFXmanager(maneja clips de efectos de sonido)
+- UIsoundManager(Maneja clips de la ui)
+- MusicManager(Maneja clips de la musica)
+
 
 ---
 
@@ -75,7 +82,6 @@ audioManager.Stop("Explosion");
 
 - `Play`: Si el audio ya se está reproduciendo, lo reinicia en el mismo canal.
 - `PlayOverlapping`: Reproduce múltiples instancias del mismo sonido si hay canales disponibles.
-- Si se reproducen muchos sonidos rápidamente, el sistema crea canales adicionales si `StrictLimit` está desactivado, y luego los destruye automáticamente.
 
 ---
 
