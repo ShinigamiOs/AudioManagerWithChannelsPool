@@ -20,10 +20,15 @@ namespace AudioSystem.Core
     /// </remarks>
     public class AudioChannelPool
     {
+        /// <summary> Transform for the new Pool. </summary>
         private Transform _parent;
+        /// <summary> Number of channels of the pool</summary>
         private int _maxChannels;
+        /// <summary> free channels to play audio </summary>
         private Queue<AudioChannel> _availableChannels = new Queue<AudioChannel>();
+        /// <summary> all channels of the pool </summary>
         private List<AudioChannel> _allChannels = new List<AudioChannel>();
+        /// <summary> Busy channels that are playing audio </summary>
         private Queue<AudioChannel> _busyChannels = new Queue<AudioChannel>();
 
         /// <summary>
@@ -72,7 +77,7 @@ namespace AudioSystem.Core
                 return oldestChannel;
             }
 
-            // This should theoretically never happen since we pre-create channels
+            // This should never happen since we pre-create channels but just in case
             Debug.LogError("[AudioSystem] No channels available in pool!");
             return null;
         }
