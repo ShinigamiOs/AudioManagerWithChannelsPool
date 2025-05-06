@@ -24,22 +24,32 @@ namespace AudioSystem
     /// </remarks>
      public class AudioManager : MonoBehaviour
     {
+        /// <summary> Used for prefab save, need to be diferente for each audiomanager </summary>
         [Header("Identification")]
         [Tooltip("Used for store in PlayerPrefs (Try not to Repite in others AudioManagers)")]
         [SerializeField] private string _managerName = "SFX";
 
+        
         [Header("Channel Configuration")]
         [Tooltip("Number of audio channels")]
         [SerializeField, Min(1)] private int _channelCount = 10;
 
+        /// <summary> General volumen for all the clips </summary>
         [Tooltip("Audios Volume")]
         [Range(0, 1f)] 
         [SerializeField] private float _masterVolume = 1;
 
+        /// <summary> 
+        /// The music should just pause so it can continue where it left or if changed in another 
+        /// scene, SFX should stop since they are just in the moment, no need to keep track.
+        ///</summary>
         [Tooltip("Should the audios stop when mute or pause(is sfx or music)")]
         [SerializeField] private bool _stopOnMute = false;
 
 
+        /// <summary> 
+        /// COnfiguration to show in a UI to volume with a slider and a mute toggle.
+        ///</summary>
         [Header("UI Configuration (Not necesary but recomended)")]
         [Tooltip("Slider to initialize Volumen Setting")]
         [SerializeField] private Slider _sliderUI;
@@ -56,13 +66,20 @@ namespace AudioSystem
         [Tooltip("Color of slider when Muted")]
         [SerializeField] private Color _sliderMutedColor;
 
+        ///<summary> If the manager is muted</summary>
         private bool _isMuted;
+         ///<summary> Reference to the image fill original color</summary>
         private Color _sliderImageFillColor;
+        ///<summary> Reference to the handle original color</summary>
         private Color _sliderHanddleImageColor;
 
+        ///<summary> Reference to the library of the clip</summary>
         private AudioLibrary _library;
+        ///<summary> Reference to the channel pool</summary>
         private AudioChannelPool _channelPool;
+        ///<summary> Reference to the AudioPlayer to manage the clips</summary>
         private AudioPlayer _player;
+        ///<summary> Scripts for save in prefab</summary>
         private const string VOLUME_PREF_KEY = "AudioManager_Volume";
         private const string MUTE_PREF_KEY = "AudioManager_IsMuted";
 
@@ -280,6 +297,9 @@ namespace AudioSystem
 
         #region Helpers
 
+        /// <summary>
+        /// Get the name of the audio by his id, id = index in array
+        /// </summary>
         private string GetAudioNameByID(int audioID)
         {
             AudioEntry entry = _library?.GetEntry(audioID);
@@ -290,7 +310,13 @@ namespace AudioSystem
             }
             return entry.name;
         }
-
+        
+        /// <summary>
+        /// Check if the name exist in the library
+        /// </summary>
+        /// <param name="audioName">Name of the file to check.</param>
+        /// <param name="validName">Output parameter that will contain the validated name.</param>
+        /// <returns>
         private bool ValidateAudioName(string audioName, out string validName)
         {
             validName = null;
