@@ -64,6 +64,9 @@ namespace AudioSystem.Core
             currentClip = null;
             hasFinishedPlaying = true;
         }
+        /// <summary>
+        /// Asign the volume to the audio source.
+        /// </summary>
         public void SetVolume(float volume){
             source.volume = volume;
         }
