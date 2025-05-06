@@ -30,6 +30,9 @@ namespace AudioSystem.Core
         [System.Serializable]
         public class AudioEvent : UnityEvent<string> { }
 
+        /// <summary>
+        /// Events if the are needed
+        /// </summary>
         [Header("Event Callbacks")]
         [Tooltip("Invoked when audio playback begins")]
         public AudioEvent OnAudioStart;
